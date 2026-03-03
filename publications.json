@@ -1,0 +1,29 @@
+{
+  "source": {
+    "name": "Google Scholar",
+    "profile": "https://scholar.google.com/citations?user=X8GzMrEAAAAJ&hl=en",
+    "user": "X8GzMrEAAAAJ"
+  },
+  "updated_at": "2026-03-03T22:24:59.112171+00:00",
+  "count": 3,
+  "publications": [
+    {
+      "title": "From Transthoracic to Transesophageal: Cross-Modality Generation Using LoRA Diffusion",
+      "authors": "E Oladokun, Y Ou, A Novikova, D Kulikova, S Thomas, J Šprem, V Grau",
+      "venue": "International Workshop on Advances in Simplifying Medical Ultrasound",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=X8GzMrEAAAAJ&pagesize=100&citation_for_view=X8GzMrEAAAAJ:9yKSN-GCB0IC"
+    },
+    {
+      "title": "Transesophageal echocardiography generation using anatomical models",
+      "authors": "E Oladokun, M Abdulkareem, J Šprem, V Grau",
+      "venue": "International Conference on Medical Image Computing and Computer-Assisted Intervention",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=X8GzMrEAAAAJ&pagesize=100&citation_for_view=X8GzMrEAAAAJ:d1gkVwhDpl0C"
+    },
+    {
+      "title": "Machine-learning informed prediction of linear solver tolerance for non-linear solution methods in numerical simulation",
+      "authors": "E Oladokun, S Sheth, T Jönsthövel, K Neylon",
+      "venue": "ECMOR XVII",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=X8GzMrEAAAAJ&pagesize=100&citation_for_view=X8GzMrEAAAAJ:u5HHmVD_uO8C"
+    }
+  ]
+}

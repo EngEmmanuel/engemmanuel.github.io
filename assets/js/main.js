@@ -28,8 +28,11 @@
 
 	// Nav.
 		var $nav_a = $nav.find('a');
+		var $nav_internal_a = $nav_a.filter(function() {
+			return ($(this).attr('href') || '').charAt(0) == '#';
+		});
 
-		$nav_a
+		$nav_internal_a
 			.addClass('scrolly')
 			.on('click', function(e) {
 

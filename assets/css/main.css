@@ -1756,13 +1756,12 @@ input, select, textarea {
 
 		.image.avatar48 {
 			width: 48px;
-			height: 48px;
-			background: #f00;
+			height: auto;
 		}
 
 			.image.avatar48 img {
-				width: 48px;
-				height: 48px;
+				width: 100%;
+				height: auto;
 			}
 
 		.image.fit {
@@ -2338,7 +2337,7 @@ input, select, textarea {
 		/* Header */
 
 			#header {
-				width: 20%;
+				width: 30%;
 			}
 
 			#logo .image {
@@ -2574,6 +2573,74 @@ input, select, textarea {
 				}
 
 	}
+
+/* Publications */
+
+	#publications-list .publication-resources {
+		margin-top: 0.35em;
+		font-size: 0.9em;
+		color: #8ebebc;
+	}
+
+	#publications-list .publication-badge {
+		display: inline-block;
+		padding: 0.1em 0.5em;
+		font-size: 0.72em;
+		font-weight: 600;
+		border-radius: 999px;
+		line-height: 1.5;
+		vertical-align: middle;
+	}
+
+	#publications-list .best-paper-badge {
+		position: relative;
+		color: #fff;
+		background: #e27689;
+		cursor: pointer;
+	}
+
+	#publications-list .confetti-piece {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 0.24em;
+		height: 0.45em;
+		opacity: 0.95;
+		border-radius: 1px;
+		pointer-events: none;
+		animation: publication-confetti 700ms ease-out forwards;
+	}
+
+	@keyframes publication-confetti {
+		0% {
+			transform: translate(-50%, -50%) rotate(0deg);
+			opacity: 1;
+		}
+		100% {
+			transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--rotation));
+			opacity: 0;
+		}
+	}
+
+		#publications-list .publication-resources .icon {
+			margin-right: 0.2em;
+		}
+
+		#publications-list .publication-arxiv-logo {
+			height: 0.95em;
+			width: auto;
+			vertical-align: -0.1em;
+			margin-right: 0.1em;
+		}
+
+		#publications-list .publication-resources a {
+			color: #8ebebc;
+			border-bottom: 0;
+		}
+
+			#publications-list .publication-resources a:hover {
+				color: #7eaeac;
+			}
 
 /* Mobile */
 
