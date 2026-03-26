@@ -183,6 +183,35 @@
 		container.appendChild(resources);
 	}
 
+	function renderSummary(data) {
+		var summaryList = document.getElementById('publications-summary');
+		if (!summaryList) return;
+		while (summaryList.firstChild) summaryList.removeChild(summaryList.firstChild);
+
+		if (!data || !Array.isArray(data.publications) || data.publications.length === 0) return;
+
+		data.publications.forEach(function(pub) {
+			var item = document.createElement('li');
+			if (pub.url) {
+				var link = document.createElement('a');
+				link.href = pub.url;
+				link.target = '_blank';
+				link.rel = 'noopener noreferrer';
+				link.textContent = pub.title || 'Untitled';
+				item.appendChild(link);
+			} else {
+				item.textContent = pub.title || 'Untitled';
+			}
+			if (pub.year) {
+				var year = document.createElement('span');
+				year.className = 'overview-year';
+				year.textContent = ' (' + pub.year + ')';
+				item.appendChild(year);
+			}
+			summaryList.appendChild(item);
+		});
+	}
+
 	function renderPublications(data) {
 		if (!data || !Array.isArray(data.publications) || data.publications.length === 0) {
 			setMessage('Publications will appear here shortly.');
@@ -238,7 +267,10 @@
 			}
 			return response.json();
 		})
-		.then(renderPublications)
+		.then(function(data) {
+			renderSummary(data);
+			renderPublications(data);
+		})
 		.catch(function() {
 			setMessage('Unable to load publications right now.');
 		});

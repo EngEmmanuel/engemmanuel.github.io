@@ -10,7 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-	<link rel="stylesheet" href="assets/css/custom.css" />
+		<link rel="stylesheet" href="assets/css/custom.css" />
 	</head>
 	<body class="is-preload">
 
@@ -81,14 +81,37 @@
 								<h2>Portfolio</h2>
 							</header>
 
-							<h3>Publications</h3>
+							<!-- At-a-glance two-column overview -->
+							<div class="row overview-panel">
+								<div class="col-6 col-12-mobile overview-col">
+									<p class="overview-label">Research</p>
+									<ul id="publications-summary">
+										<li class="overview-loading">Loading...</li>
+									</ul>
+									<a href="#publications-detail" class="overview-more scrolly">See all publications ↓</a>
+								</div>
+								<div class="col-6 col-12-mobile overview-col overview-col--right">
+									<p class="overview-label">Engineering</p>
+									<ul class="overview-projects">
+										<li><strong>Face2Visceral</strong> — visceral fat prediction from facial images (PyTorch, FastAPI)</li>
+										<li><strong>HandRiGht</strong> — handwriting accessibility tool for cerebral palsy (Google Hackathon, 2nd)</li>
+										<li><strong>ECIQC</strong> — clinical DICOM image QC tool (Oxford &amp; GE HealthCare)</li>
+										<li><strong>sciProject-MCMC</strong> — interactive MCMC algorithm visualiser</li>
+									</ul>
+									<a href="#projects-detail" class="overview-more scrolly">See all projects ↓</a>
+								</div>
+							</div>
+
+							<!-- Publications detail -->
+							<h3 id="publications-detail">Publications</h3>
 							<ul id="publications-list">
 								<li>Loading publications...</li>
 							</ul>
 							<p id="publications-updated"></p>
 							<p><a href="https://scholar.google.com/citations?user=X8GzMrEAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">View all on Google Scholar</a></p>
 
-							<h3>Projects</h3>
+							<!-- Projects detail -->
+							<h3 id="projects-detail">Projects</h3>
 							<div class="row">
 								<div class="col-6 col-12-mobile">
 									<h4 class="projects-column-title">Hackathons</h4>
@@ -107,11 +130,11 @@
 							</div>
 
 							<div class="demo-callout">
-							<p><strong>Interactive demos</strong> — explore Face2Visceral, a live MCMC visualiser, EchoLVFM video synthesis, and more.</p>
-							<a href="https://projects.emmanuel.oladokun.co.uk" target="_blank" rel="noopener noreferrer" class="button demo-cta">View all demos →</a>
-						</div>
+								<p><strong>Interactive demos</strong> — explore Face2Visceral, a live MCMC visualiser, EchoLVFM video synthesis, and more.</p>
+								<a href="https://projects.emmanuel.oladokun.co.uk" target="_blank" rel="noopener noreferrer" class="button demo-cta">View all demos →</a>
+							</div>
 
-						<h3>Skills</h3>
+							<h3>Skills</h3>
 							<p>Python, MATLAB, C++; PyTorch, HuggingFace, NumPy, SciPy, Scikit-Learn; generative modelling, diffusion, flow matching, representation learning, contrastive learning, and robust evaluation on large-scale real-world datasets.</p>
 
 							<h3>Production &amp; Deployment</h3>

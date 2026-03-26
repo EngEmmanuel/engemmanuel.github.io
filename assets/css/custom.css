@@ -256,6 +256,95 @@ section.three {
 	font-weight: 600;
 }
 
+/* ── Overview panel ──────────────────────────────────────── */
+
+.overview-panel {
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	margin-bottom: 2.5em;
+	overflow: hidden;
+}
+
+.overview-col {
+	padding: 1.5em 1.75em;
+}
+
+.overview-col--right {
+	border-left: 1px solid #e5e7eb;
+}
+
+@media screen and (max-width: 960px) {
+	.overview-col--right {
+		border-left: none;
+		border-top: 1px solid #e5e7eb;
+	}
+}
+
+.overview-label {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.65em;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: #9ca3af;
+	margin-bottom: 0.75em !important;
+}
+
+#publications-summary,
+.overview-projects {
+	list-style: none;
+	padding: 0;
+	margin-bottom: 0.75em;
+}
+
+#publications-summary li,
+.overview-projects li {
+	font-size: 0.75em;
+	line-height: 1.5em;
+	color: #374151;
+	padding: 0.3em 0;
+	border-bottom: 1px solid #f3f4f6;
+}
+
+#publications-summary li:last-child,
+.overview-projects li:last-child {
+	border-bottom: none;
+}
+
+#publications-summary li a {
+	color: #374151;
+	border-bottom: none;
+}
+
+#publications-summary li a:hover {
+	color: #111;
+}
+
+.overview-year {
+	color: #9ca3af;
+	font-size: 0.9em;
+}
+
+.overview-loading {
+	color: #9ca3af;
+	font-style: italic;
+}
+
+.overview-more {
+	display: inline-block;
+	font-size: 0.72em;
+	color: #6b7280;
+	border-bottom: none !important;
+	margin-top: 0.25em;
+	transition: color 0.2s ease;
+}
+
+.overview-more:hover {
+	color: #111 !important;
+	border-bottom: none !important;
+}
+
 /* ── Publications list ───────────────────────────────────── */
 
 #publications-list {
