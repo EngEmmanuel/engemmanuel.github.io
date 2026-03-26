@@ -73,7 +73,7 @@
 
 	// Papers with publicly available code — keyed by lowercase title fragment.
 	var PUBLIC_REPOS = {
-		'echolvm': 'https://github.com/EngEmmanuel/EchoLVFM',
+		'echolvfm': 'https://github.com/EngEmmanuel/EchoLVFM',
 	};
 
 	function publicRepoForPublication(pub) {
@@ -157,7 +157,7 @@
 			repoLink.href = repoUrl;
 			repoLink.target = '_blank';
 			repoLink.rel = 'noopener noreferrer';
-			repoLink.textContent = 'Code available';
+			repoLink.textContent = 'EchoLVFM';
 			resources.appendChild(repoLink);
 		} else {
 			var collaborator = collaboratorForPublication(pub);

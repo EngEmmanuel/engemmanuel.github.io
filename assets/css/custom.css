@@ -291,29 +291,76 @@ section.three {
 	color: #555 !important;
 }
 
-/* ── Item logos (tool + org) ─────────────────────────────── */
+/* ── Equal-height overview columns ───────────────────────── */
+
+.overview-columns-row {
+	align-items: stretch !important;
+}
+
+.overview-columns-row > [class*="col-"] {
+	display: flex !important;
+	flex-direction: column;
+}
+
+/* Engineering list grows to fill column height */
+.projects-list--fill {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0;
+}
+
+/* Each engineering card expands to share the space equally */
+.projects-list--fill li {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 0.4em;
+	text-align: center;
+	padding-top: 0.35em;
+	padding-bottom: 0.35em;
+}
+
+/* Sub-section titles within Engineering column */
+.projects-subcolumn-title {
+	font-size: 0.72em;
+	font-weight: 600;
+	color: #9ca3af;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	margin-top: 0.5em;
+	margin-bottom: 0.3em;
+	flex-shrink: 0;
+}
+
+/* ── Item logos (inline) ──────────────────────────────────── */
 
 .item-gh-icon {
 	font-size: 0.85em;
 	color: #374151;
-	margin-right: 0.3em;
-	vertical-align: middle;
 	opacity: 0.7;
+	flex-shrink: 0;
 }
 
 .item-logos {
-	display: inline;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25em;
+	flex-shrink: 0;
 }
 
 .tool-logos,
 .org-logos {
-	display: inline;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25em;
 }
 
 .logos-sep {
 	color: #d1d5db;
 	font-size: 0.85em;
-	margin: 0 0.3em;
 }
 
 .item-logo {
@@ -322,24 +369,11 @@ section.three {
 	display: inline-block;
 	vertical-align: middle;
 	opacity: 0.8;
-	margin: 0 0.1em;
 }
 
 .item-logo--org {
-	height: 12px;
+	height: 13px;
 	opacity: 0.7;
-}
-
-.org-badge {
-	font-size: 0.68em;
-	font-family: 'Inter', sans-serif;
-	color: #6b7280;
-	background: #f3f4f6;
-	border: 1px solid #e5e7eb;
-	border-radius: 4px;
-	padding: 0.1em 0.45em;
-	white-space: nowrap;
-	vertical-align: middle;
 }
 
 /* ── Publications list ───────────────────────────────────── */
@@ -392,6 +426,8 @@ section.three {
 /* ── Production bullets ──────────────────────────────────── */
 
 #portfolio ul:not(.projects-list):not(#publications-list):not(.icons) {
+	list-style: none;
+	padding-left: 0;
 	font-size: 0.82em;
 	line-height: 1.8em;
 }
