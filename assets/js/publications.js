@@ -71,6 +71,21 @@
 		return 'GE HealthCare';
 	}
 
+	// Papers with publicly available code — keyed by lowercase title fragment.
+	var PUBLIC_REPOS = {
+		'echolvm': 'https://github.com/EngEmmanuel/EchoLVFM',
+	};
+
+	function publicRepoForPublication(pub) {
+		var title = (pub && pub.title ? pub.title : '').toLowerCase();
+		for (var key in PUBLIC_REPOS) {
+			if (title.indexOf(key) !== -1) {
+				return PUBLIC_REPOS[key];
+			}
+		}
+		return null;
+	}
+
 	function buildArxivSearchUrl(title) {
 		var query = encodeURIComponent(title || '');
 		return 'https://arxiv.org/search/?query=' + query + '&searchtype=title';
@@ -124,7 +139,6 @@
 	}
 
 	function appendResourcesLine(container, pub) {
-		var collaborator = collaboratorForPublication(pub);
 		var resources = document.createElement('div');
 		resources.className = 'publication-resources';
 
@@ -135,7 +149,20 @@
 		githubLabel.textContent = 'GitHub';
 		githubIcon.appendChild(githubLabel);
 		resources.appendChild(githubIcon);
-		resources.appendChild(document.createTextNode(' Proprietary (' + collaborator + ' collaboration; not all materials can be shared)'));
+
+		var repoUrl = publicRepoForPublication(pub);
+		if (repoUrl) {
+			resources.appendChild(document.createTextNode(' '));
+			var repoLink = document.createElement('a');
+			repoLink.href = repoUrl;
+			repoLink.target = '_blank';
+			repoLink.rel = 'noopener noreferrer';
+			repoLink.textContent = 'Code available';
+			resources.appendChild(repoLink);
+		} else {
+			var collaborator = collaboratorForPublication(pub);
+			resources.appendChild(document.createTextNode(' Proprietary (' + collaborator + ' collaboration; not all materials can be shared)'));
+		}
 
 		resources.appendChild(document.createTextNode(' | '));
 
