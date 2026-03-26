@@ -24,11 +24,10 @@ jobs:
       - name: Install dependencies
         run: pip install -r scripts/requirements-publications.txt
 
-      - name: Fetch publications from Google Scholar
+      - name: Fetch publications from Semantic Scholar
         run: |
           python scripts/update_publications.py \
-            --user X8GzMrEAAAAJ \
-            --hl en \
+            --author-id 2299780720 \
             --output publications.json
 
       - name: Commit and push if changed
@@ -41,5 +40,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add publications.json
-          git commit -m "chore: update publications from Google Scholar"
+          git commit -m "chore: update publications from Semantic Scholar"
           git push

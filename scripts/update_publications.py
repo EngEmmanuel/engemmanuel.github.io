@@ -1,237 +1,123 @@
 #!/usr/bin/env python3
-"""Fetch publications from a Google Scholar profile and write publications.json."""
+"""Fetch publications from Semantic Scholar and write publications.json.
+
+Semantic Scholar is used instead of Google Scholar because GitHub Actions
+IP ranges are blocked by Google Scholar's anti-bot systems.
+
+Papers not indexed by Semantic Scholar (e.g. industry conference papers)
+can be kept by adding them to the MANUAL_PAPERS list below.
+"""
 
 from __future__ import annotations
 
 import argparse
-import importlib
 import json
-import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlencode, urljoin
 
 import requests
 
-BASE_URL = "https://scholar.google.com/citations"
-USER_AGENT = (
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/122.0.0.0 Safari/537.36"
-)
+SEMANTIC_SCHOLAR_API = "https://api.semanticscholar.org/graph/v1"
+PAPER_FIELDS = "title,authors,venue,year,externalIds,publicationVenue"
+USER_AGENT = "portfolio-publications-updater/2.0 (github.com/EngEmmanuel/engemmanuel.github.io)"
+
+# Papers not indexed by Semantic Scholar — add any missing ones here.
+MANUAL_PAPERS: list[dict[str, Any]] = [
+    {
+        "title": "Machine-learning informed prediction of linear solver tolerance for non-linear solution methods in numerical simulation",
+        "authors": "E Oladokun, S Sheth, T Jönsthövel, K Neylon",
+        "venue": "ECMOR XVII",
+        "year": 2021,
+        "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=X8GzMrEAAAAJ&pagesize=100&citation_for_view=X8GzMrEAAAAJ:u5HHmVD_uO8C",
+    },
+]
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--user", required=True, help="Google Scholar user id")
-    parser.add_argument("--hl", default="en", help="Scholar language code")
-    parser.add_argument(
-        "--output",
-        default="publications.json",
-        help="Output JSON file path",
-    )
-    parser.add_argument(
-        "--pagesize",
-        type=int,
-        default=100,
-        help="Rows to fetch per request (max 100)",
-    )
-    parser.add_argument(
-        "--max-publications",
-        type=int,
-        default=300,
-        help="Hard limit on number of publications to fetch",
-    )
-    parser.add_argument(
-        "--sleep-seconds",
-        type=float,
-        default=1.25,
-        help="Pause between requests",
-    )
-    parser.add_argument(
-        "--no-expand-venue",
-        action="store_true",
-        help="Skip per-publication detail fetch for full venue names",
-    )
+    parser.add_argument("--author-id", default="2299780720", help="Semantic Scholar author ID")
+    parser.add_argument("--output", default="publications.json", help="Output JSON file path")
+    parser.add_argument("--sleep-seconds", type=float, default=1.0, help="Pause between requests")
     return parser.parse_args()
 
 
-def _request_page(session: requests.Session, user: str, hl: str, start: int, pagesize: int) -> str:
-    params = {
-        "user": user,
-        "hl": hl,
-        "cstart": start,
-        "pagesize": min(max(pagesize, 1), 100),
-    }
-    url = f"{BASE_URL}?{urlencode(params)}"
-    response = session.get(url, timeout=30)
-    response.raise_for_status()
-    text = response.text
-
-    blocked_markers = [
-        "Our systems have detected unusual traffic",
-        "not a robot",
-        "/sorry/",
-        "recaptcha",
-    ]
-    if any(marker.lower() in text.lower() for marker in blocked_markers):
-        raise RuntimeError("Google Scholar blocked the request (anti-bot challenge).")
-
-    return text
-
-
-def _request_url(session: requests.Session, url: str) -> str:
-    response = session.get(url, timeout=30)
-    response.raise_for_status()
-    text = response.text
-    blocked_markers = [
-        "Our systems have detected unusual traffic",
-        "not a robot",
-        "/sorry/",
-        "recaptcha",
-    ]
-    if any(marker.lower() in text.lower() for marker in blocked_markers):
-        raise RuntimeError("Google Scholar blocked the request (anti-bot challenge).")
-    return text
-
-
-def _extract_year(text: str) -> int | None:
-    match = re.search(r"\b(19|20)\d{2}\b", text)
-    if not match:
-        return None
-    return int(match.group(0))
-
-
-def _fetch_full_venue(session: requests.Session, publication_url: str) -> str | None:
-    if not publication_url:
-        return None
-
-    bs4 = importlib.import_module("bs4")
-    BeautifulSoup = bs4.BeautifulSoup
-
-    try:
-        html = _request_url(session, publication_url)
-    except (requests.RequestException, RuntimeError):
-        return None
-
-    soup = BeautifulSoup(html, "html.parser")
-    fields = soup.select("div.gsc_oci_field")
-    values = soup.select("div.gsc_oci_value")
-
-    venue_labels = {"journal", "conference", "book", "source"}
-    for field, value in zip(fields, values):
-        label = field.get_text(" ", strip=True).lower()
-        if label in venue_labels:
-            text = value.get_text(" ", strip=True)
-            if text:
-                return text
-
-    return None
-
-
-def _parse_rows(session: requests.Session, html: str, hl: str, expand_venue: bool, sleep_seconds: float) -> list[dict[str, Any]]:
-    bs4 = importlib.import_module("bs4")
-    BeautifulSoup = bs4.BeautifulSoup
-    soup = BeautifulSoup(html, "html.parser")
-    rows = soup.select("tr.gsc_a_tr")
-    publications: list[dict[str, Any]] = []
-
-    for row in rows:
-        title_link = row.select_one("a.gsc_a_at")
-        title = (title_link.get_text(strip=True) if title_link else "").strip()
-        if not title:
-            continue
-
-        gray_lines = row.select("td.gsc_a_t .gs_gray")
-        authors = gray_lines[0].get_text(" ", strip=True) if len(gray_lines) > 0 else ""
-        venue = gray_lines[1].get_text(" ", strip=True) if len(gray_lines) > 1 else ""
-
-        year_text = ""
-        year_el = row.select_one("td.gsc_a_y span")
-        if year_el:
-            year_text = year_el.get_text(strip=True)
-        sort_year = int(year_text) if re.fullmatch(r"\d{4}", year_text) else _extract_year(venue)
-
-        citation_path = title_link.get("href", "") if title_link else ""
-        publication_url = ""
-        if citation_path:
-            publication_url = urljoin(
-                "https://scholar.google.com",
-                citation_path,
-            )
-            if "hl=" not in publication_url:
-                joiner = "&" if "?" in publication_url else "?"
-                publication_url = f"{publication_url}{joiner}hl={hl}"
-
-        if expand_venue and publication_url:
-            full_venue = _fetch_full_venue(session, publication_url)
-            if full_venue:
-                venue = full_venue
-            time.sleep(max(sleep_seconds, 0.0))
-
-        publications.append(
-            {
-                "title": title,
-                "authors": authors,
-                "venue": venue,
-                "_sort_year": sort_year,
-                "url": publication_url,
-            }
-        )
-
-    return publications
-
-
-def fetch_publications(user: str, hl: str, pagesize: int, max_publications: int, sleep_seconds: float, expand_venue: bool) -> list[dict[str, Any]]:
+def fetch_papers(author_id: str, sleep_seconds: float) -> list[dict[str, Any]]:
     session = requests.Session()
     session.headers.update({"User-Agent": USER_AGENT})
 
-    all_publications: list[dict[str, Any]] = []
-    start = 0
+    papers: list[dict[str, Any]] = []
+    limit = 100
+    offset = 0
 
-    while len(all_publications) < max_publications:
-        html = _request_page(session, user=user, hl=hl, start=start, pagesize=pagesize)
-        page_publications = _parse_rows(session, html, hl=hl, expand_venue=expand_venue, sleep_seconds=sleep_seconds)
+    while True:
+        url = f"{SEMANTIC_SCHOLAR_API}/author/{author_id}/papers"
+        resp = session.get(url, params={"fields": PAPER_FIELDS, "limit": limit, "offset": offset}, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
 
-        if not page_publications:
+        batch = data.get("data", [])
+        papers.extend(batch)
+
+        if len(batch) < limit:
             break
+        offset += limit
+        time.sleep(sleep_seconds)
 
-        all_publications.extend(page_publications)
-        if len(page_publications) < pagesize:
-            break
-
-        start += pagesize
-        time.sleep(max(sleep_seconds, 0.0))
-
-    deduped: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    for pub in all_publications:
-        key = f"{pub.get('title', '').strip().lower()}|{pub.get('_sort_year')}"
-        if key in seen:
-            continue
-        seen.add(key)
-        deduped.append(pub)
-
-    deduped.sort(key=lambda item: (item.get("_sort_year") or 0, item.get("title") or ""), reverse=True)
-    for publication in deduped:
-        publication.pop("_sort_year", None)
-    return deduped[:max_publications]
+    return papers
 
 
-def write_output(output_path: Path, user: str, hl: str, publications: list[dict[str, Any]]) -> None:
-    output = {
-        "source": {
-            "name": "Google Scholar",
-            "profile": f"{BASE_URL}?user={user}&hl={hl}",
-            "user": user,
-        },
-        "updated_at": datetime.now(timezone.utc).isoformat(),
-        "count": len(publications),
-        "publications": publications,
+def format_paper(raw: dict[str, Any]) -> dict[str, Any]:
+    authors = ", ".join(a["name"] for a in raw.get("authors", []))
+
+    venue = raw.get("venue") or ""
+    pub_venue = raw.get("publicationVenue") or {}
+    if pub_venue.get("name"):
+        venue = pub_venue["name"]
+
+    external_ids = raw.get("externalIds") or {}
+    url = ""
+    if external_ids.get("ArXiv"):
+        url = f"https://arxiv.org/abs/{external_ids['ArXiv']}"
+    elif external_ids.get("DOI"):
+        url = f"https://doi.org/{external_ids['DOI']}"
+
+    return {
+        "title": raw.get("title", ""),
+        "authors": authors,
+        "venue": venue,
+        "year": raw.get("year"),
+        "url": url,
     }
 
+
+def merge_papers(fetched: list[dict[str, Any]], manual: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    def normalise(title: str) -> str:
+        return title.lower().strip()
+
+    seen = {normalise(p["title"]) for p in fetched}
+    merged = list(fetched)
+    for paper in manual:
+        if normalise(paper["title"]) not in seen:
+            merged.append(paper)
+            seen.add(normalise(paper["title"]))
+
+    merged.sort(key=lambda p: (p.get("year") or 0, p.get("title") or ""), reverse=True)
+    return merged
+
+
+def write_output(output_path: Path, author_id: str, papers: list[dict[str, Any]]) -> None:
+    output = {
+        "source": {
+            "name": "Semantic Scholar",
+            "profile": f"https://www.semanticscholar.org/author/{author_id}",
+            "author_id": author_id,
+        },
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "count": len(papers),
+        "publications": papers,
+    }
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(output, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
@@ -240,20 +126,16 @@ def main() -> int:
     args = parse_args()
     output_path = Path(args.output)
 
-    publications = fetch_publications(
-        user=args.user,
-        hl=args.hl,
-        pagesize=args.pagesize,
-        max_publications=args.max_publications,
-        sleep_seconds=args.sleep_seconds,
-        expand_venue=not args.no_expand_venue,
-    )
+    print(f"Fetching papers for Semantic Scholar author {args.author_id}...")
+    raw_papers = fetch_papers(author_id=args.author_id, sleep_seconds=args.sleep_seconds)
+    print(f"Fetched {len(raw_papers)} papers from Semantic Scholar.")
 
-    if not publications:
-        raise RuntimeError("No publications were fetched from Google Scholar.")
+    fetched = [format_paper(p) for p in raw_papers]
+    merged = merge_papers(fetched, MANUAL_PAPERS)
+    print(f"Total after merging manual entries: {len(merged)}")
 
-    write_output(output_path=output_path, user=args.user, hl=args.hl, publications=publications)
-    print(f"Wrote {len(publications)} publications to {output_path}")
+    write_output(output_path=output_path, author_id=args.author_id, papers=merged)
+    print(f"Wrote {len(merged)} publications to {output_path}")
     return 0
 
 

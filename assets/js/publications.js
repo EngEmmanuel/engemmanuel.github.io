@@ -24,9 +24,22 @@
 	}
 
 	function appendAuthorsWithBoldName(container, authors) {
-		var targetName = 'E Oladokun';
-		if (!authors || authors.indexOf(targetName) === -1) {
-			container.appendChild(document.createTextNode(authors || ''));
+		var targetNames = ['Emmanuel Oladokun', 'E Oladokun'];
+		if (!authors) {
+			container.appendChild(document.createTextNode(''));
+			return;
+		}
+
+		var targetName = null;
+		for (var t = 0; t < targetNames.length; t++) {
+			if (authors.indexOf(targetNames[t]) !== -1) {
+				targetName = targetNames[t];
+				break;
+			}
+		}
+
+		if (!targetName) {
+			container.appendChild(document.createTextNode(authors));
 			return;
 		}
 
