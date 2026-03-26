@@ -291,6 +291,54 @@ section.three {
 	color: #555 !important;
 }
 
+/* ── Item logos (tool + org) ─────────────────────────────── */
+
+.item-logos {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	margin-top: 0.35em;
+	flex-wrap: wrap;
+}
+
+.tool-logos,
+.org-logos {
+	display: flex;
+	align-items: center;
+	gap: 0.35em;
+}
+
+.logos-divider {
+	color: #d1d5db;
+	font-size: 0.85em;
+	line-height: 1;
+}
+
+.item-logo {
+	height: 16px;
+	width: auto;
+	display: inline-block;
+	vertical-align: middle;
+	opacity: 0.8;
+}
+
+.item-logo--org {
+	height: 13px;
+	opacity: 0.7;
+}
+
+.org-badge {
+	font-size: 0.68em;
+	font-family: 'Inter', sans-serif;
+	color: #6b7280;
+	background: #f3f4f6;
+	border: 1px solid #e5e7eb;
+	border-radius: 4px;
+	padding: 0.1em 0.45em;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
 /* Sub-section titles within Engineering column */
 .projects-subcolumn-title {
 	font-size: 0.72em;
