@@ -4,12 +4,12 @@
     "profile": "https://www.semanticscholar.org/author/2299780720",
     "author_id": "2299780720"
   },
-  "updated_at": "2026-03-26T12:55:11.612201+00:00",
+  "updated_at": "2026-03-30T07:48:26.159674+00:00",
   "count": 4,
   "publications": [
     {
       "title": "EchoLVFM: One-Step Video Generation via Latent Flow Matching for Echocardiogram Synthesis",
-      "authors": "Emmanuel Oladokun, Sarina Thomas, Jurica Šprem, Vicente Grau",
+      "authors": "Emmanuel Oladokun, Sarina Thomas, Jurica vSprem, Vicente Grau",
       "venue": "",
       "year": 2026,
       "url": "https://arxiv.org/abs/2603.13967"
