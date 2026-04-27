@@ -4,30 +4,9 @@
     "profile": "https://www.semanticscholar.org/author/2299780720",
     "author_id": "2299780720"
   },
-  "updated_at": "2026-04-20T08:15:03.766749+00:00",
-  "count": 4,
+  "updated_at": "2026-04-27T08:31:47.582416+00:00",
+  "count": 1,
   "publications": [
-    {
-      "title": "EchoLVFM: One-Step Video Generation via Latent Flow Matching for Echocardiogram Synthesis",
-      "authors": "Emmanuel Oladokun, Sarina Thomas, Jurica vSprem, Vicente Grau",
-      "venue": "",
-      "year": 2026,
-      "url": "https://arxiv.org/abs/2603.13967"
-    },
-    {
-      "title": "From Transthoracic to Transesophageal: Cross-Modality Generation using LoRA Diffusion",
-      "authors": "Emmanuel Oladokun, Yuxuan Ou, Anna Novikova, Daria P. Kulikova, Sarina Thomas, Jurica Šprem, Vicente Grau",
-      "venue": "ASMUS@MICCAI",
-      "year": 2025,
-      "url": "https://arxiv.org/abs/2508.13077"
-    },
-    {
-      "title": "Transesophageal Echocardiography Generation Using Anatomical Models",
-      "authors": "Emmanuel Oladokun, M. Abdulkareem, Jurica Šprem, Vicente Grau",
-      "venue": "DALI@MICCAI",
-      "year": 2024,
-      "url": "https://arxiv.org/abs/2410.06781"
-    },
     {
       "title": "Machine-learning informed prediction of linear solver tolerance for non-linear solution methods in numerical simulation",
       "authors": "E Oladokun, S Sheth, T Jönsthövel, K Neylon",
