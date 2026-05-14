@@ -96,6 +96,11 @@
 		return title.indexOf('cross-modality generation using lora diffusion') !== -1;
 	}
 
+	function isEarlyAcceptPublication(pub) {
+		var title = (pub && pub.title ? pub.title : '').toLowerCase();
+		return title.indexOf('echolvfm') !== -1;
+	}
+
 	function triggerLocalConfetti(target) {
 		if (!target || target.classList.contains('confetti-active')) return;
 		target.classList.add('confetti-active');
@@ -132,6 +137,20 @@
 		badge.className = 'publication-badge best-paper-badge';
 		badge.textContent = 'Best Paper (ASMUS-MICCAI 2025)';
 		badge.title = 'Hover for celebration';
+		badge.addEventListener('mouseenter', function() {
+			triggerLocalConfetti(badge);
+		});
+		container.appendChild(badge);
+	}
+
+	function appendEarlyAcceptBadge(container, pub) {
+		if (!isEarlyAcceptPublication(pub)) return;
+
+		container.appendChild(document.createTextNode(' '));
+		var badge = document.createElement('span');
+		badge.className = 'publication-badge early-accept-badge';
+		badge.textContent = 'Early-accept (MICCAI 2026)';
+		badge.title = 'Top 9% of 4,601 submissions — hover for celebration';
 		badge.addEventListener('mouseenter', function() {
 			triggerLocalConfetti(badge);
 		});
@@ -236,6 +255,7 @@
 
 			item.appendChild(titleStrong);
 			appendBestPaperBadge(item, pub);
+			appendEarlyAcceptBadge(item, pub);
 
 			if (pub.authors) {
 				item.appendChild(document.createTextNode(' — '));

@@ -2611,6 +2611,13 @@ input, select, textarea {
 		cursor: pointer;
 	}
 
+	#publications-list .early-accept-badge {
+		position: relative;
+		color: #2b1f00;
+		background: #f0b340;
+		cursor: pointer;
+	}
+
 	#publications-list .confetti-piece {
 		position: absolute;
 		left: 50%;
