@@ -4,13 +4,13 @@
     "profile": "https://www.semanticscholar.org/author/2299780720",
     "author_id": "2299780720"
   },
-  "updated_at": "2026-05-14T09:54:43.104177+00:00",
+  "updated_at": "2026-05-14T10:28:15.547189+00:00",
   "count": 4,
   "publications": [
     {
       "title": "EchoLVFM: One-Step Video Generation via Latent Flow Matching for Echocardiogram Synthesis",
       "authors": "E Oladokun, S Thomas, J Šprem, V Grau",
-      "venue": "Early-accepted at MICCAI 2026 — top 9% of 4,601 submissions",
+      "venue": "Early-accepted at MICCAI 2026",
       "year": 2026,
       "url": "https://arxiv.org/abs/2603.13967"
     },

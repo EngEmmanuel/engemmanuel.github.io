@@ -149,8 +149,8 @@
 		container.appendChild(document.createTextNode(' '));
 		var badge = document.createElement('span');
 		badge.className = 'publication-badge early-accept-badge';
-		badge.textContent = 'Early-accept (MICCAI 2026)';
-		badge.title = 'Top 9% of 4,601 submissions — hover for celebration';
+		badge.textContent = 'Early-accept (top 9% of 4,601)';
+		badge.title = 'Hover for celebration';
 		badge.addEventListener('mouseenter', function() {
 			triggerLocalConfetti(badge);
 		});

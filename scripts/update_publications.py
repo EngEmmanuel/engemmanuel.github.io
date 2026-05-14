@@ -28,7 +28,7 @@ MANUAL_PAPERS: list[dict[str, Any]] = [
     {
         "title": "EchoLVFM: One-Step Video Generation via Latent Flow Matching for Echocardiogram Synthesis",
         "authors": "E Oladokun, S Thomas, J Šprem, V Grau",
-        "venue": "Early-accepted at MICCAI 2026 — top 9% of 4,601 submissions",
+        "venue": "Early-accepted at MICCAI 2026",
         "year": 2026,
         "url": "https://arxiv.org/abs/2603.13967",
     },
