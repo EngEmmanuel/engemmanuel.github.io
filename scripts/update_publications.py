@@ -26,6 +26,27 @@ USER_AGENT = "portfolio-publications-updater/2.0 (github.com/EngEmmanuel/engemma
 # Papers not indexed by Semantic Scholar — add any missing ones here.
 MANUAL_PAPERS: list[dict[str, Any]] = [
     {
+        "title": "EchoLVFM: One-Step Video Generation via Latent Flow Matching for Echocardiogram Synthesis",
+        "authors": "E Oladokun, S Thomas, J Šprem, V Grau",
+        "venue": "Early-accepted at MICCAI 2026 — top 9% of 4,601 submissions",
+        "year": 2026,
+        "url": "https://arxiv.org/abs/2603.13967",
+    },
+    {
+        "title": "From Transthoracic to Transesophageal: Cross-Modality Generation Using LoRA Diffusion",
+        "authors": "E Oladokun, Y Ou, A Novikova, D Kulikova, S Thomas, J Šprem, V Grau",
+        "venue": "International Workshop on Advances in Simplifying Medical Ultrasound (ASMUS) — MICCAI 2025",
+        "year": 2025,
+        "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=X8GzMrEAAAAJ&pagesize=100&citation_for_view=X8GzMrEAAAAJ:9yKSN-GCB0IC",
+    },
+    {
+        "title": "Transesophageal echocardiography generation using anatomical models",
+        "authors": "E Oladokun, M Abdulkareem, J Šprem, V Grau",
+        "venue": "International Conference on Medical Image Computing and Computer-Assisted Intervention (MICCAI 2023)",
+        "year": 2023,
+        "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=X8GzMrEAAAAJ&pagesize=100&citation_for_view=X8GzMrEAAAAJ:d1gkVwhDpl0C",
+    },
+    {
         "title": "Machine-learning informed prediction of linear solver tolerance for non-linear solution methods in numerical simulation",
         "authors": "E Oladokun, S Sheth, T Jönsthövel, K Neylon",
         "venue": "ECMOR XVII",

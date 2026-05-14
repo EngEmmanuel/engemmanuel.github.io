@@ -4,9 +4,30 @@
     "profile": "https://www.semanticscholar.org/author/2299780720",
     "author_id": "2299780720"
   },
-  "updated_at": "2026-05-11T09:46:42.117974+00:00",
-  "count": 1,
+  "updated_at": "2026-05-14T09:54:43.104177+00:00",
+  "count": 4,
   "publications": [
+    {
+      "title": "EchoLVFM: One-Step Video Generation via Latent Flow Matching for Echocardiogram Synthesis",
+      "authors": "E Oladokun, S Thomas, J Šprem, V Grau",
+      "venue": "Early-accepted at MICCAI 2026 — top 9% of 4,601 submissions",
+      "year": 2026,
+      "url": "https://arxiv.org/abs/2603.13967"
+    },
+    {
+      "title": "From Transthoracic to Transesophageal: Cross-Modality Generation Using LoRA Diffusion",
+      "authors": "E Oladokun, Y Ou, A Novikova, D Kulikova, S Thomas, J Šprem, V Grau",
+      "venue": "International Workshop on Advances in Simplifying Medical Ultrasound (ASMUS) — MICCAI 2025",
+      "year": 2025,
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=X8GzMrEAAAAJ&pagesize=100&citation_for_view=X8GzMrEAAAAJ:9yKSN-GCB0IC"
+    },
+    {
+      "title": "Transesophageal echocardiography generation using anatomical models",
+      "authors": "E Oladokun, M Abdulkareem, J Šprem, V Grau",
+      "venue": "International Conference on Medical Image Computing and Computer-Assisted Intervention (MICCAI 2023)",
+      "year": 2023,
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=X8GzMrEAAAAJ&pagesize=100&citation_for_view=X8GzMrEAAAAJ:d1gkVwhDpl0C"
+    },
     {
       "title": "Machine-learning informed prediction of linear solver tolerance for non-linear solution methods in numerical simulation",
       "authors": "E Oladokun, S Sheth, T Jönsthövel, K Neylon",
